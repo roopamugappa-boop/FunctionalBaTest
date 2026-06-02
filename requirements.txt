@@ -5,3 +5,6 @@ python-multipart
 resend
 flask
 Flask-Session
+python-docx
+beautifulsoup4
+
