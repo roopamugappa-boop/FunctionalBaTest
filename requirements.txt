@@ -4,3 +4,4 @@ gunicorn
 python-multipart
 resend
 flask
+Flask-Session
