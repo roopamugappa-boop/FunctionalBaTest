@@ -328,7 +328,7 @@ textarea:focus, input[type=text]:focus {
         <a href="/brd" {% if '/brd' in request.path %}class="active"{% endif %}>BRD Editor</a>
         <a href="/workflow" {% if '/workflow' in request.path and not '/workflow_canvas' in request.path %}class="active"{% endif %}>Workflow</a>
         <a href="/workflow_canvas" {% if '/workflow_canvas' in request.path %}class="active"{% endif %}>Workflow Canvas</a>
-        <a href="/gap" {% if '/gap' in request.path %}class="active"{% endif %}>Payment Gateway</a>
+        <a href="/gap" {% if '/gap' in request.path %}class="active"{% endif %}>KYC & Payment Gateway</a>
         <a href="/review" {% if '/review' in request.path %}class="active"{% endif %}>Review</a>
     </div>
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -850,18 +850,57 @@ def brd():
             return redirect('/workflow')
 
     body = '''
-    <h2>BRD / FRD Rich Text Editor</h2>
+    <h2>BRD Text Editor</h2>
     <form method="POST" onsubmit="saveEditor()" id="brd-form" style="margin-bottom:0;">
         <div style="margin-bottom:14px;font-size:1.01em;color:#555;">
-            <b>Instructions:</b> Provide detailed BRD or FRD. Use formatting options, tables, lists, images, etc.<br>
-            <b>Features:</b>
-            <ul style="color:#0b82b5;">
-                <li>Edit with full formatting (bold, italic, underline, color, sizes, headers, lists, code blocks, etc.)</li>
-                <li>Insert/paste images – exported in Word as embedded images.</li>
-                <li>Rich tables and hyperlinks convert to Word structure.</li>
-                <li>Export to Word with <b>company header, footer, and page numbers</b> automatically added.</li>
-                <li>Formatting is preserved including tables, images, lists, links.</li>
-            </ul>
+            <div style="font-size:1.07em; line-height:1.62;">
+                <b style="font-size:1.13em;color:#253262;">Professional Instructions:</b>
+                <br>
+                You are tasked with drafting a <b>Business Requirements Document (BRD)</b> focused on the <b>integration of a Payment Gateway</b> within a fintech environment.
+                <br><br>
+                <span style="color:#444;">
+                Your BRD should be precise, well-structured, and tailored for a professional audience. Please ensure your document conveys a clear understanding of the project scope, objectives, and all associated requirements. Pay careful attention to both business and technical aspects.
+                </span>
+                <br><br>
+                <ol style="margin-left:30px; padding-left:4px;">
+                    <li>
+                        <b>Business Objectives & Scope:</b> Clearly outline the project objectives and the boundaries of the integration initiative.
+                    </li>
+                    <li>
+                        <b>Stakeholders:</b> Identify the relevant stakeholders and their roles in the project.
+                    </li>
+                    <li>
+                        <b>Functional Requirements:</b> Detail all core and supporting functionalities required for the payment gateway integration.
+                    </li>
+                    <li>
+                        <b>Non-functional Requirements:</b> Specify key performance metrics, security standards, usability needs, scalability, and compliance obligations.
+                    </li>
+                    <li>
+                        <b>User Stories / Use Cases:</b> Describe relevant workflows from an end-user perspective to illustrate functional requirements.
+                    </li>
+                    <li>
+                        <b>Process Flows & Workflow Diagrams:</b> Provide clear diagrams or step-by-step lists to visually communicate the integration process.
+                    </li>
+                    <li>
+                        <b>Integration Points:</b> Summarize external/internal system interfaces, data exchanges, and validation or security checkpoints as appropriate.
+                    </li>
+                    <li>
+                        <b>Acceptance Criteria:</b> List measurable criteria to evaluate if requirements have been met.
+                    </li>
+                    <li>
+                        <b>Formatting & Visuals:</b> Utilize headings, tables, bullet/numbered lists, and diagrams or images to enhance clarity and professionalism.
+                    </li>
+                    <li>
+                        <b>Focus:</b> You may choose either <b>Payment Gateway</b> or <b>KYC process</b> for your BRD—ensure the document is complete, structured, and easy to navigate.
+                    </li>
+                </ol>
+                <div style="color: #6366f1; font-size:0.99em; margin-top:10px;">
+                    <b>Tip:</b> Leverage formatting, tables, and visuals throughout your document for greater impact and clarity.
+                </div>
+            </div>
+       
+ 
+            
             <b>Note:</b> Exported Word retains most formatting & images and adds header/footer to every page.
         </div>
         <div id="editor"></div>
@@ -974,23 +1013,68 @@ def workflow():
         conn.close()
         return redirect('/workflow_canvas')
     body = '''
-    <h2>Workflow Builder</h2>
+    <h2>Payment Gateway Integration Workflow Builder</h2>
     <form method="POST">
     <div id="workflow">
         <div class="workflow-step">
-            Customer enters Aadhaar
+            Requirement Gathering<br>
+            <small style="color:#64748b;">Define payment flow, failure flow, refund, retry<br>➜ Deliverable: <b>FRS</b></small>
         </div>
         <div class="workflow-step">
-            Generate OTP
+            Identify Business Need<br>
+            <small style="color:#64748b;">Understand why payment gateway is required and payment methods (UPI, cards, etc.)<br>➜ Deliverable: <b>BRD</b></small>
         </div>
         <div class="workflow-step">
-            Validate OTP
+            Process Mapping<br>
+            <small style="color:#64748b;">Create end-to-end flow diagram<br>➜ Deliverable: <b>Process Flow</b></small>
         </div>
         <div class="workflow-step">
-            Fetch UIDAI response
+            Vendor Evaluation<br>
+            <small style="color:#64748b;">Compare vendors based on pricing, APIs, SLA, security<br>➜ Deliverable: <b>Vendor Comparison Matrix</b></small>
         </div>
         <div class="workflow-step">
-            Account activation
+            Technical Planning<br>
+            <small style="color:#64748b;">Define APIs, webhooks, security, DB changes<br>➜ Deliverable: <b>SDD</b></small>
+        </div>
+        <div class="workflow-step">
+            Commercial & Legal Approval<br>
+            <small style="color:#64748b;">Finalize contract, NDA, SLA<br>➜ Deliverable: <b>Signed Agreement</b></small>
+        </div>
+        <div class="workflow-step">
+            API Integration (Development)<br>
+            <small style="color:#64748b;">Develop payment, status, refund APIs</small>
+        </div>
+        <div class="workflow-step">
+            Sandbox Setup<br>
+            <small style="color:#64748b;">Get test credentials from vendor<br>➜ Deliverable: <b>Sandbox Access</b></small>
+        </div>
+        <div class="workflow-step">
+            SIT Testing<br>
+            <small style="color:#64748b;">Test system integration and API responses</small>
+        </div>
+        <div class="workflow-step">
+            Testing Preparation<br>
+            <small style="color:#64748b;">Create test cases (success, failure, edge cases)<br>➜ Deliverable: <b>Test Cases, RTM</b></small>
+        </div>
+        <div class="workflow-step">
+            UAT Testing<br>
+            <small style="color:#64748b;">Business validates end-to-end flow<br>➜ Deliverable: <b>UAT Sign-Off</b></small>
+        </div>
+        <div class="workflow-step">
+            Go-Live Readiness<br>
+            <small style="color:#64748b;">Check SSL, monitoring, rollback plan<br>➜ Deliverable: <b>Go-Live Approval</b></small>
+        </div>
+        <div class="workflow-step">
+            Production Setup<br>
+            <small style="color:#64748b;">Get live API keys and configure system</small>
+        </div>
+        <div class="workflow-step">
+            Post Go-Live Monitoring<br>
+            <small style="color:#64748b;">Monitor failures, refunds, settlements<br>➜ Deliverable: <b>Hypercare Report</b></small>
+        </div>
+        <div class="workflow-step">
+            Test Transaction (Go-Live)<br>
+            <small style="color:#64748b;">Do ₹1 transaction and verify all flows<br>➜ Deliverable: <b>Production Validation Report</b></small>
         </div>
     </div>
     <input type="hidden" name="workflow_order" id="workflow_order">
@@ -1940,4 +2024,6 @@ def submit():
 # =========================================================
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
+
+
